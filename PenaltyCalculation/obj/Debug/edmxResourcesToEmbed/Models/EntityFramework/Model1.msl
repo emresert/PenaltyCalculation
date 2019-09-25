@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PenaltyCalculateDBModelStoreContainer" CdmEntityContainer="PenaltyCalculateDBEntities1">
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="PenaltyCalculateDBModel.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="countryId" ColumnName="countryId" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Holiday">
+      <EntityTypeMapping TypeName="PenaltyCalculateDBModel.Holiday">
+        <MappingFragment StoreEntitySet="Holiday">
+          <ScalarProperty Name="holidayId" ColumnName="holidayId" />
+          <ScalarProperty Name="holidayName" ColumnName="holidayName" />
+          <ScalarProperty Name="holidayDate" ColumnName="holidayDate" />
+          <ScalarProperty Name="fkCountry" ColumnName="fkCountry" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spFindingHoliday" FunctionName="PenaltyCalculateDBModel.Store.spFindingHoliday">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="PenaltyCalculateDBModel.spFindingHoliday_Result">
+          <ScalarProperty Name="countryId" ColumnName="countryId" />
+          <ScalarProperty Name="countryName" ColumnName="countryName" />
+          <ScalarProperty Name="holidayId" ColumnName="holidayId" />
+          <ScalarProperty Name="holidayName" ColumnName="holidayName" />
+          <ScalarProperty Name="holidayDate" ColumnName="holidayDate" />
+          <ScalarProperty Name="fkCountry" ColumnName="fkCountry" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

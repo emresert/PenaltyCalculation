@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PenaltyCalculateDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="countryId" />
+    </Key>
+    <Property Name="countryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="countryName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Holiday" Relationship="Self.FK_Holiday_Country" FromRole="Country" ToRole="Holiday" />
+  </EntityType>
+  <EntityType Name="Holiday">
+    <Key>
+      <PropertyRef Name="holidayId" />
+    </Key>
+    <Property Name="holidayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="holidayName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="holidayDate" Type="DateTime" Precision="0" />
+    <Property Name="fkCountry" Type="Int32" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_Holiday_Country" FromRole="Holiday" ToRole="Country" />
+  </EntityType>
+  <Association Name="FK_Holiday_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="Holiday" Type="Self.Holiday" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="Holiday">
+        <PropertyRef Name="fkCountry" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PenaltyCalculateDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Country" EntityType="Self.Country" />
+    <EntitySet Name="Holiday" EntityType="Self.Holiday" />
+    <AssociationSet Name="FK_Holiday_Country" Association="Self.FK_Holiday_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="Holiday" EntitySet="Holiday" />
+    </AssociationSet>
+    <FunctionImport Name="spFindingHoliday" ReturnType="Collection(PenaltyCalculateDBModel.spFindingHoliday_Result)">
+      <Parameter Name="datefirst" Mode="In" Type="String" />
+      <Parameter Name="datelast" Mode="In" Type="String" />
+      <Parameter Name="fkCountry" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="spFindingHoliday_Result">
+    <Property Type="Int32" Name="countryId" Nullable="false" />
+    <Property Type="String" Name="countryName" Nullable="true" MaxLength="70" />
+    <Property Type="Int32" Name="holidayId" Nullable="false" />
+    <Property Type="String" Name="holidayName" Nullable="true" MaxLength="70" />
+    <Property Type="DateTime" Name="holidayDate" Nullable="true" />
+    <Property Type="Int32" Name="fkCountry" Nullable="true" />
+  </ComplexType>
+</Schema>
